@@ -24,7 +24,8 @@ const register = async (req, res) => {
         }
          const user = await User.create(data)
 
-        return res.json({user})
+        const token = jwt.sign({user}, "my_token", {expiresIn: '1d'})
+        return res.json({data: user, token})
     } catch (message) {
         return res.status(403).json({message})
     }
